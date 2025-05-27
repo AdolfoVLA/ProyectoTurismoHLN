@@ -1,9 +1,10 @@
-export class LoginInModel{
-    username : string = ""
+export class LoginInModel
+{
+    correo : string = ""
     password : string = "";
 
-    constructor(username: string, password:string){
-        this.username = username;
+    constructor(correo: string, password:string){
+        this.correo = correo;
         this.password = password;
     }
 

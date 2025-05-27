@@ -1,18 +1,30 @@
 "use client";
+import { LoginInModel } from "@/models/input/LoginInModel";
+import { LoginOutModel } from "@/models/output/LoginOutModel";
+import axios from "axios";
 import React, { useState } from "react";
 
 const LoginForm: React.FC = () => {
 
-    const [correo, setCorreo] = useState<string>("");
+    const [email, setEmail] = useState<string>("");
     const [password, setPassword] = useState<string>("");
     const [showModal, setShowModal] = useState<boolean>(false);
 
-    const ValidarCredenciales = () => {
+    const ValidarCredenciales = async () => {
         
-        if(correo == "adolfo@gmail.com" && password=="123A")
-            alert("Bienvenido a nuestra pagina")    
-        else
-            setShowModal(true);
+        const loginData = new LoginInModel(email, password);
+
+        try
+        {
+            const respuesta = await axios.post<LoginOutModel>("http://localhost:4321/api/route/Validar_Credenciales_Usuario", loginData)
+            
+            console.log(respuesta.data.codigoRespuestaaaaaa);
+        }
+        catch(error)
+        {
+
+        }
+       
     }
 
     const CerrarModal = () =>{
@@ -34,8 +46,8 @@ const LoginForm: React.FC = () => {
                                 id="email"
                                 className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                                 placeholder="correo@gmail.com"
-                                value={correo}
-                                onChange={(e) => setCorreo(e.target.value)} />
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)} />
                         </div>
                         <div>
                             <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Contraseña</label>
